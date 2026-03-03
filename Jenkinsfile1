@@ -20,21 +20,24 @@ pipeline {
             
         }
         stage('stage2') {
+            environment {
+                nameee = 'cccccc'
+            }
             agent {label 'slave2'}
              steps {
                 echo 'Executing stage 2...'
+                echo "Service name: ${env.s_name}"
+                echo "IP Address: ${env.IP}"
+                echo "Nameee: ${env.nameee}"
                 
             }
             
         }
-        stage('satge3') {
+        stage('stage3') {
             agent {label 'slave1'}
              steps {
                 echo 'Executing stage 3...'
-                sh '''
-
-
-                '''
+                echo "Name: ${env.nameee}"
             }   
             
         }
