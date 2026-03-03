@@ -1,20 +1,28 @@
 pipeline {
-    agent { label 'slave1' }
+    agent none
 
     stages {
         stage('stage 1') {
+            agent {label 'slave1'}
             steps {
                 echo 'this is stage 1'
-                // Add your build steps here
+
+                sh '''
+                sleep 10
+
+                '''
             }
         }
         stage('stage 2') {
+            agent {label 'slave1'}
+
             steps {
                 echo 'this is stage 2'
                 // Add your build steps here
             }
         }
         stage('stage 3') {
+            agent {label 'slave2'}
             steps {
                 echo 'this is stage 3'
 
@@ -23,6 +31,7 @@ pipeline {
             }
         }
         stage('stage 4') {
+            agent {label 'slave2'}
             steps {
                 echo 'this is stage sds'
                 sh '''
