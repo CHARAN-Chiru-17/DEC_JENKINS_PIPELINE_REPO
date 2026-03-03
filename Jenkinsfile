@@ -30,6 +30,7 @@ pipeline {
                 echo "Running multiple commands in stage 4"
                 ls -lrt
                 echo "Finished listing files"
+                sleep 10
                 '''
             }
         }
