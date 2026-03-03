@@ -1,5 +1,4 @@
 pipeline {
-
     agent none
 
     environment {
@@ -8,8 +7,8 @@ pipeline {
     }
 
     stages {
-        agent {label 'slave1'}
         stage('stage1') {
+            agent {label 'slave1'}
              steps {
                 echo 'Executing stage 1...'
                 sh 'sleep 10'
