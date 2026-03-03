@@ -2,9 +2,9 @@ pipeline {
     agent none
 
     parameters {
-        string(name: 'PARAM1', defaultValue: 'default value', description: 'This is a string parameter')
-        booleanParam(name: 'PARAM2', defaultValue: true, description: 'This is a boolean parameter')
-        choice(name: 'PARAM3', choices: ['Option 1', 'Option 2', 'Option 3'], description: 'This is a choice parameter')
+        string(name: 'NAME', defaultValue: 'default value', description: 'NAME PLZZ')
+        booleanParam(name: 'SKIPTEST', description: 'This is a boolean parameter')
+        choice(name: 'BARANCH', choices: ['TEST', 'STAGING', 'PRODUCTION'], description: 'This is a choice parameter')
     }
 
     stages {
@@ -24,9 +24,9 @@ pipeline {
 
             steps {
                 echo 'this is stage 2'
-                echo "Param1 value: ${params.PARAM1}"
-                echo "Param2 value: ${params.PARAM2}"
-                echo "Param3 value: ${params.PARAM3}"
+                echo "Param1 value: ${params.NAME}"
+                echo "Param2 value: ${params.SKIPTEST}"
+                echo "Param3 value: ${params.BARANCH}"
                 
             }
         }
