@@ -21,6 +21,7 @@ pipeline {
             
         }
         stage('stage2') {
+            agent {label 'slave2'}
              steps {
                 echo 'Executing stage 2...'
                 
@@ -28,6 +29,7 @@ pipeline {
             
         }
         stage('satge3') {
+            agent {label 'slave1'}
              steps {
                 echo 'Executing stage 3...'
                 sh '''
