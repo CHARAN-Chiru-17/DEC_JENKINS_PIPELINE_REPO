@@ -1,0 +1,41 @@
+pipeline {
+
+    agent none
+
+    environment {
+        s_name = 'cnjsFJjandfjssjfnj'
+        IP = '12382782478'
+    }
+
+    stages {
+        agent {label 'slave1'}
+        stage('stage1') {
+             steps {
+                echo 'Executing stage 1...'
+                sh 'sleep 10'
+
+                echo "Service name: ${env.s_name}"
+                echo "IP Address: ${env.IP}"
+                
+            }
+            
+        }
+        stage('stage2') {
+             steps {
+                echo 'Executing stage 2...'
+                
+            }
+            
+        }
+        stage('satge3') {
+             steps {
+                echo 'Executing stage 3...'
+                sh '''
+
+
+                '''
+            }   
+            
+        }
+    }
+}
