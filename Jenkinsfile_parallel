@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('stage1') {
+             steps {
+                echo 'Executing stage 1...'
+                sh 'sleep 10'
+                
+            }
+            
+        }
+        stage('stage2') {
+            parallel {
+                stage('stage2.1') {
+                     steps {
+                        echo 'Executing stage 2.1...'
+                        sh 'sleep 10'
+                          
+                    }
+                    
+                }
+                stage('stage2-2') {
+                     steps {
+                        echo 'Executing stage 2-2...'
+                        sh 'sleep 10'
+                          
+                    }
+                    
+                }
+            }
+            }
+       
+             steps {
+                echo 'Executing stage 2...'
+                sh 'sleep 10'
+                  
+            }
+            
+        }
+        stage('stage3') {
+            
+             steps {
+                echo 'Executing stage 3...'
+                sh 'sleep 10'
+                
+            }   
+            
+        }
+    }
+}
