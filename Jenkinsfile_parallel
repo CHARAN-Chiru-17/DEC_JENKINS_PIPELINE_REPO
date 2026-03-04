@@ -12,7 +12,7 @@ pipeline{
         }
         stage('stage2- PARALLEL TESTING') {
             parallel {
-                stage('stage2-1') {
+                stage('paralel-1') {
                     agent {label 'slave2'}
                      steps {
                         echo 'Executing stage 2-1...'
@@ -20,7 +20,7 @@ pipeline{
                     }
                     
                 }
-                stage('stage2-2') {
+                stage('parallel-2') {
                     agent {label 'slave1'}
                      steps {
                         echo 'Executing stage 2-2...'
@@ -30,7 +30,7 @@ pipeline{
                 }
 
             }
-            
+
         }
         stage('stage3') {
             agent {label 'slave1'}
