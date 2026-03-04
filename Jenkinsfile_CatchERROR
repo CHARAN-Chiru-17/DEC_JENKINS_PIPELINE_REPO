@@ -15,6 +15,7 @@ pipeline{
             }
             
         }
+        }
         stage('stage2- PARALLEL TESTING') {
             parallel {
                 stage('paralel-1') {
@@ -46,5 +47,4 @@ pipeline{
             
         }
     }
-}
 }
