@@ -1,60 +1,52 @@
-pipeline{
+pipeline {
     agent none
 
     stages {
         stage('stage1') {
-            agent {label 'slave1'}
-             steps {
-                    script {
-                        try {
-                            echo 'Executing stage 1...'
-                            sh '''
+            agent { label 'slave1' }
+            steps {
+                script {
+                    try {
+                        echo 'Executing stage 1...'
+                        sh '''
                             sleep 10
                             exit 1
-
-                            '''
-
-                        }
-                        catch (errorr) {
-                            echo "Caught an exception: ${errorr}"
-                        }
-
-                        
+                        '''
+                    } catch (err) {
+                        echo "Caught an exception: ${err}"
+                        currentBuild.result = 'SUCCESS'
+                        currentstageResult = 'FAILURE'
                     }
-                    }
+                }
+            }
+        }
 
-            
-        }
-        }
         stage('stage2- PARALLEL TESTING') {
             parallel {
-                stage('paralel-1') {
-                    agent {label 'slave2'}
-                     steps {
+                stage('parallel-1') {
+                    agent { label 'slave2' }
+                    steps {
                         echo 'Executing stage 2-1...'
                         sh 'sleep 10'
                     }
-                    
                 }
+
                 stage('parallel-2') {
-                    agent {label 'slave1'}
-                     steps {
+                    agent { label 'slave1' }
+                    steps {
                         echo 'Executing stage 2-2...'
                         sh 'sleep 10'
                     }
-                    
                 }
-
             }
-
         }
+
         stage('stage3') {
-            agent {label 'slave1'}
-             steps {
+            agent { label 'slave1' }
+            steps {
                 echo 'Executing stage 3...'
                 sh 'sleep 10'
-            }   
-            
+            }
         }
     }
-
+}
