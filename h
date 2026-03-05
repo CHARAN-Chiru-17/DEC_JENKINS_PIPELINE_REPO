@@ -1,9 +1,17 @@
 pipeline {
     agent none
 
+    environment {
+        cur_env = 'CHARAN'
+    }
+
     stages {
         stage('stage1') {
             agent { label 'slave2' }
+
+            when {
+                environment name: 'cur_env', value: 'CHARAN'
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
