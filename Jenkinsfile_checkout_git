@@ -1,0 +1,27 @@
+pipeline {
+
+    agent any
+
+    stages { 
+        stage('git') {
+            steps{
+                git branch: 'main', url: 'https://github.com/CHARAN-Chiru-17/DEC_JENKINS_PIPELINE_REPO.git'
+            }
+
+        }
+        stage('stage 1 when branch is main') {           
+            when {
+                branch 'main'
+            }
+                steps{
+                    echo 'Executing stage 1...'
+                    sh '''
+                        pwd
+                        ls -lrt
+                        sleep 10
+                    '''
+                }
+
+    }
+}
+}
