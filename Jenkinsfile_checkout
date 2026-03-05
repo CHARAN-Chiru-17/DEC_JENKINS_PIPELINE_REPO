@@ -1,37 +1,38 @@
 pipeline {
+  agent any
 
-    agent any
+  stages {
+    stage('CHECKOUT') {
+      steps {
+        checkout([$class: 'GitSCM',
+          branches: [[name: '*/main']],
+          extensions: [],
+          userRemoteConfigs: [[
+            credentialsId: 'hp-git',
+            url: 'https://github.com/CHARAN-Chiru-17/DEC_JENKINS_PIPELINE_REPO.git'
+          ]]
+        ])
 
-    stages {
-        stage('CHECKOUT') {
-            steps{
-                checkout ([$class: 'GitSCM',
-                          branches: [[name: '*/main']], 
-                          extensions: [], 
-                          userRemoteConfigs: [[credentialsId: 'hp-git', 
-                          url: 'https://github.com/CHARAN-Chiru-17/DEC_JENKINS_PIPELINE_REPO.git']]])
-
-                sh '''
-                    echo "Current branch is: ${GIT_BRANCH}"
-                    echo "branch name is: ${GIT_BRANCH_NAME}"
-                '''
-            }
+        script {
+          env.BRANCH = sh(script: "git rev-parse --abbrev-ref HEAD", returnStdout: true).trim()
+          echo "Detected branch: ${env.BRANCH}"
+          echo "GIT_BRANCH env: ${env.GIT_BRANCH}"
         }
-        stage('stage 1 when branch is main') {
-            
-            when {
-                expression { env.GIT_BRANCH == '*/main' }
-            }
-                steps{
-                    echo 'Executing stage 1...'
-                    sh '''
-                        pwd
-                        ls -lrt
-                        sleep 10
-                    '''
-                }
-        }
-
-
+      }
     }
+
+    stage('stage 1 when branch is main') {
+      when {
+        expression { env.BRANCH == 'main' }
+      }
+      steps {
+        echo 'Executing stage 1...'
+        sh '''
+          pwd
+          ls -lrt
+          sleep 10
+        '''
+      }
+    }
+  }
 }
