@@ -10,7 +10,7 @@ pipeline {
             agent { label 'slave2' }
 
             when {
-                environment name: 'cur_env', value: 'CHARAN'
+                environment name: 'cur_env', value: 'CHARANn'
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
