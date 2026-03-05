@@ -5,6 +5,11 @@ pipeline {
         cur_env = 'CHARAN'
     }
 
+    parameters {
+        booleanParam(name: 'RUN_STAGE2',  description: 'Run Stage 2')
+
+    }
+
     stages {
         stage('stage1') {
             agent { label 'slave2' }
@@ -12,28 +17,31 @@ pipeline {
             when {
                 environment name: 'cur_env', value: 'CHARANn'
             }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                steps {
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
-                    echo 'Executing stage 1...'
-                    sh '''
-                        sleep 10
-                        exit 1
-                    '''
-            }
+                        echo 'Executing stage 1...'
+                        sh '''
+                            sleep 10
+                            exit 1
+                        '''
+                }
 
-            }
+                }
 
         }
         stage('stage2') {
             agent { label 'slave1' }
-            steps {
-                echo 'Executing stage 2...'
-                sh '''
-                    sleep 10
-                '''
-
+            when {
+                expression { params.RUN_STAGE2 == true }
             }
+                steps {
+                    echo 'Executing stage 2...'
+                    sh '''
+                        sleep 10
+                    '''
+
+                }
 
         }
         stage('stage3-parallel') {
