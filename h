@@ -3,7 +3,7 @@ pipeline {
 
     stages {
         stage('stage1') {
-            agent { label 'slave1' }
+            agent { label 'slave2' }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
@@ -23,7 +23,6 @@ pipeline {
                 echo 'Executing stage 2...'
                 sh '''
                     sleep 10
-                    exit 1
                 '''
 
             }
@@ -37,34 +36,34 @@ pipeline {
                         echo 'Executing stage 3-1...'
                         sh '''
                             sleep 10
-                            exit 1
                         '''
 
                     }
 
                 }
                 stage('parallel-3.2') {
-                    agent { label 'slave1' }
-                    steps {
-                        echo 'Executing stage 3-2...'
-                        sh '''
-                            sleep 10
-                            exit 1
-                        '''
-
-                    }
+                    agent { label 'slave2' }
+                        steps {
+                            echo 'Executing stage 3-2...'
+                            sh '''
+                                sleep 10
+                            '''
+                        }
 
                 }
                 stage('parallel-3.3') {
                     agent { label 'slave1' }
-                    steps {
-                        echo 'Executing stage 3...'
-                        sh '''
-                            sleep 10
-                            exit 1
-                        '''
+                        steps {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
-                    }
+                                echo 'Executing stage 3...'
+                                sh '''
+                                    sleep 10
+                                    exit 1
+                                '''
+                            }
+
+                        }
 
                 }
             }
