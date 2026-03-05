@@ -5,7 +5,11 @@ pipeline {
     stages {
         stage('CHECKOUT') {
             steps{
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'hp-git', url: 'https://github.com/CHARAN-Chiru-17/DEC_JENKINS_PIPELINE_REPO.git']])
+                checkout ([$class: 'GitSCM',
+                          branches: [[name: '*/main']], 
+                          extensions: [], 
+                          userRemoteConfigs: [[credentialsId: 'hp-git', 
+                          url: 'https://github.com/CHARAN-Chiru-17/DEC_JENKINS_PIPELINE_REPO.git']]])
 
                 sh '''
                     echo "Current branch is: ${GIT_BRANCH}"
