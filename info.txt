@@ -1,0 +1,6 @@
+--WEBHOOK--
+webhook is a meachanis/way when one system send a request(https) to another system
+when a event occurs
+
+In in jenkins cicd pipeline ,weebhook are commonly used when code is pushed to git 
+repository like(github,gitlab) jenkins automatically triggers a build
