@@ -1,0 +1,43 @@
+--WEBHOOK--
+webhook is a meachanis/way when one system send a request(https) to another system
+when a event occurs
+
+In in jenkins cicd pipeline ,weebhook are commonly used when code is pushed to git 
+repository like(github,gitlab) jenkins automatically triggers a build
+
+----Github Webhook-----
+-----Prerequisites----
+1.	Github username and personal access token with repository url to configure SCM in jenkins
+2.	Install Required Jenkins Plugins
+(These plugins are usually included in a standard Jenkins installation. If not, you can install them manually.)
+	
+1.	Open Jenkins → Manage Jenkins → Manage Plugins.
+2.	Under the Available tab, search for:
+•	GitHub Plugin (integrates GitHub with Jenkins).
+•	Git Plugin (for Git SCM).
+3.	Install the plugins and restart Jenkins.
+Configure CI (Continuous Integration, Jenkins <-> Github Webhook)
+Step 1: Create a Jenkins Job
+•	Click New Item → Name the job (e.g., GitHub-Webhook-Demo) → Select Freestyle project → OK.
+•	Configure the Job:
+•	Goto Source Code Management:
+•	Select Git.
+•	Enter your GitHub repo URL (e.g., https://github.com/your-username/your-repo.git).
+•	Add credentials if the repo is private.
+•	Build Triggers:
+•	Check GitHub hook trigger for GITScm polling.
+Step 2: Set Up GitHub Webhook
+•	Go to your GitHub repository → Settings → Webhooks → Add Webhook.
+•	Configure the Webhook:
+•	Payload URL: http://<JENKINS-URL>/github-webhook/
+•	Content Type: application/json.
+•	Trigger: Select Just the push event (or choose customize events).
+•	Save the webhook.
+Final: Test the Setup
+Verify Jenkins 
+•	Make a change to your GitHub repo (e.g., push a commit).
+•	Check Jenkins for an automatic build trigger of the Job/Project:
+•	Go to the job’s Build History to see if a new build started.
+Verify GitHub Webhook Delivery
+•	In GitHub, go to repo Settings → Webhooks → Recent Deliveries (Tab).
+•	Check for a 200 response (success).
