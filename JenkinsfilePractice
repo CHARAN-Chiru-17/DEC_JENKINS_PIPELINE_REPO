@@ -11,7 +11,7 @@ pipeline{
         stage(checkout-git){
 
             steps{
-                git branch="${params.BRANCH_NAME}" ,url='htts://github.com'
+                git branch: '${params.BRANCH_NAME}', credentialsId: 'hp-git', url: 'https://github.com/CHARAN-Chiru-17/DEC_JENKINS_PIPELINE_REPO.git'
             }
         }
 
