@@ -1,34 +1,27 @@
-pipeline{
-
+pipeline {
     agent any
 
-    parameters{
-        string(name: 'BRANCH_NAME', description:'select git branch')
-
+    parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Select git branch')
     }
 
-    stages{
-        stage('git'){
-
-            steps{
-                git branch: 'main', credentialsId: 'hp-git', url: 'https://github.com/CHARAN-Chiru-17/DEC_JENKINS_PIPELINE_REPO.git'
+    stages {
+        stage('git') {
+            steps {
+                echo "Checking out branch: ${params.BRANCH_NAME}"
+                git branch: "${params.BRANCH_NAME}",
+                    credentialsId: 'hp-git',
+                    url: 'https://github.com/CHARAN-Chiru-17/DEC_JENKINS_PIPELINE_REPO.git'
             }
         }
 
-        stage('build'){
-            steps{
-                sh'''
+        stage('build') {
+            steps {
+                sh '''
+                    echo "Build stage started"
                     echo hii
-
                 '''
             }
         }
-
-
-
     }
-
-
-
-
 }
