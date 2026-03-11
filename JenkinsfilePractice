@@ -8,14 +8,14 @@ pipeline{
     }
 
     stages{
-        stage(checkout-git){
+        stage('git'){
 
             steps{
                 git branch: '${params.BRANCH_NAME}', credentialsId: 'hp-git', url: 'https://github.com/CHARAN-Chiru-17/DEC_JENKINS_PIPELINE_REPO.git'
             }
         }
 
-        stage(build){
+        stage('build'){
             steps{
                 sh'''
                     echo hii
