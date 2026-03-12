@@ -1,2 +1,83 @@
-sss
-jPW_paraallel
+pipeline{
+
+    agent any
+
+    triggers {
+        pollSCM('H/10 * * * *')
+    }
+
+    paramters{
+        string(name: 'BRANCH_NAME', defualtValue:'main',description:'git branch')
+    }
+
+    environment{
+        APP = "ONLINE"
+    }
+
+    stages{
+        stage('checkout git'){
+            steps{
+                git branch: ${params.BRANCH_NAME},
+                url:'https//github.com'
+            }
+        }
+
+        stage('build'){
+            when{
+                environment name:'APP', value:"ONLINE"
+            }
+                steps{
+                    sh'''
+                        mvn complie
+                    '''
+                }
+            
+
+            
+        }
+        stage('test'){
+            parallel{
+                stage('unit test'){
+                    steps{
+                        sh'''
+                            mvn test
+
+                        '''
+                    }
+                }
+                stage('integration-test'){
+                    steps{
+                        sh'mvn integration-test'
+                    }
+                }
+            }
+        }
+        stage('deploy'){
+            steps{
+                sh'''
+
+                '''
+            }
+        }
+
+
+        post{
+            always{
+
+            }
+            success{
+
+            }
+            failure{
+
+            }
+            unstable{
+                
+            }
+        
+        }
+    }
+
+
+
+}

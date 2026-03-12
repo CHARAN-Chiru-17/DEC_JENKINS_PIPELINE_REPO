@@ -1,0 +1,84 @@
+pipeline{
+    agent any
+
+    triggers{
+        pollSCM('H/10 * * * *')
+    }
+
+    paramters{
+        string(name: 'BRANCH_NAME', defualt:'main',description:'select git branch')
+    }
+
+    environment{
+        APP_NAME = ONLINE
+    }
+
+    stages{
+        stage('git-checkout'){
+            steps{
+                git branch="${params.BRANCH_NAME, url = "https//github.com"}"
+            }
+        }
+        stage('build'){
+            when{
+                environment name: 'APP_NAME', value='ONLINE'
+            }
+                catchError(buildResult:'SUCCESS',stageResult:'FAILURE'){
+                    steps{
+                        sh'''
+                            mvn compile
+
+                        '''
+                    }
+                }
+        }
+        stage('test'){
+            parallel{
+                stage('unit'){
+                    steps{
+                        sh'mvn test'
+                    }
+                }
+                stage('integration-test'){
+                    steps{
+                        sh 'mvn integration-test'
+                    }
+                }
+            }
+        }
+        stage('deploy')  {
+            steps{
+                sh '''
+
+
+                '''
+            }
+        }
+
+    }
+    post{
+        always{
+
+        }
+        success{
+
+        }
+        failure[
+
+        ]
+        unstable{
+
+        }
+
+
+
+
+
+
+    }
+
+
+
+
+
+}
